@@ -393,17 +393,6 @@
     if (!document.fullscreenElement) el.requestFullscreen?.(); else document.exitFullscreen?.();
   }))());
 
-  /* Click to copy pixel coords */
-  const coordsOut = document.getElementById('coordsOut');
-  map.on('click', e => {
-    const p = map.project(e.latlng, 0);
-    const x = Math.round(p.x), y = Math.round(p.y);
-    const text = `${x}, ${y}`;
-    coordsOut.textContent = text;
-    try { navigator.clipboard?.writeText?.(text); } catch {}
-    L.popup().setLatLng(e.latlng).setContent(`x,y = <b>${x}, ${y}</b><br>(copied)`).openOn(map);
-  });
-
   /* --- WIP modal logic --- */
   (function setupWipModal(){
     const modal = document.getElementById('wipModal');
@@ -419,3 +408,4 @@
   </script>
 </body>
 </html>
+

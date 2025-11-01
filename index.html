@@ -293,30 +293,35 @@ const SURFACE_IMAGE_URL =
     allMarkers = [];
   }
 
-  // Build filters with checkboxes OFF by default
-  function buildFilters(categories) {
-    filterPanel.innerHTML =
-      `<h4>Key</h4>
-       <label style="margin-bottom:6px;display:block">
-         <input type="checkbox" id="toggle-underground"> Underground mode
-       </label>`;
-    const cb = document.getElementById('toggle-underground');
-    cb.checked = (currentMode === 'underground');
-    cb.addEventListener('change', e => setMode(e.target.checked ? 'underground' : 'surface'));
+// Build filters with a mode selector (Surface / Underground / Quests)
+// and category checkboxes OFF by default
+function buildFilters(categories) {
+  filterPanel.innerHTML =
+    `<h4>Key</h4>
+     <div class="mode-row" role="group" aria-label="Map mode">
+       <label><input type="radio" name="mapMode" value="surface" ${currentMode === 'surface' ? 'checked' : ''}> Surface</label>
+       <label><input type="radio" name="mapMode" value="underground" ${currentMode === 'underground' ? 'checked' : ''}> Underground</label>
+       <label><input type="radio" name="mapMode" value="quests" ${currentMode === 'quests' ? 'checked' : ''}> Quests</label>
+     </div>`;
 
-    categories.sort().forEach(cat => {
-      const id = 'cat-' + cat.replace(/\s+/g,'-');
-      const label = document.createElement('label');
-      // start UNCHECKED:
-      label.innerHTML = `<input type="checkbox" id="${id}"> ${cat}`;
-      const input = label.querySelector('input');
-      input.addEventListener('change', e => {
-        if (e.target.checked) byCat[cat].addTo(map);
-        else map.removeLayer(byCat[cat]);
-      });
-      filterPanel.appendChild(label);
+  // hook up the radios
+  [...filterPanel.querySelectorAll('input[name="mapMode"]')].forEach(r => {
+    r.addEventListener('change', e => setMode(e.target.value));
+  });
+
+  // category checkboxes (start UNCHECKED)
+  categories.sort().forEach(cat => {
+    const id = 'cat-' + cat.replace(/\s+/g,'-');
+    const label = document.createElement('label');
+    label.innerHTML = `<input type="checkbox" id="${id}"> ${cat}`;
+    const input = label.querySelector('input');
+    input.addEventListener('change', e => {
+      if (e.target.checked) byCat[cat].addTo(map);
+      else map.removeLayer(byCat[cat]);
     });
-  }
+    filterPanel.appendChild(label);
+  });
+}
 
   function buildLegend(categories) {
     legendPanel.innerHTML = categories.map(cat => {
@@ -433,6 +438,7 @@ const SURFACE_IMAGE_URL =
   </script>
 </body>
 </html>
+
 
 
 

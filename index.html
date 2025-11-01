@@ -89,6 +89,11 @@ const SURFACE_IMAGE_URL =
   const UNDERGROUND_IMAGE_URL = 
     'https://github.com/Guthanger-123/Deadpoly-Map-Garden-City-/blob/main/GCMap_.png?raw=true';
 
+    /* Quests image (same pixel size as surface) */
+  const Quests_IMAGE_URL = 
+    'https://github.com/Guthanger-123/Deadpoly-Map-Garden-City-/blob/main/GCMap_.png?raw=true';
+
+  
   /* EXACT pixel size of both images */
   const IMAGE_WIDTH  = 1264;
   const IMAGE_HEIGHT = 1264;
@@ -101,6 +106,7 @@ const SURFACE_IMAGE_URL =
     'Car Spawn':         { iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',  iconSize: [25,41], iconAnchor: [12,41] },
     'Hunting Zones':     { iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png', iconSize: [25,41], iconAnchor: [12,41] },
     'Spoilers':          { iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',    iconSize: [25,41], iconAnchor: [12,41] },
+    'Bunkers':          { iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',    iconSize: [25,41], iconAnchor: [12,41] },
     'Trader':            { iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',   iconSize: [25,41], iconAnchor: [12,41] },
     'Secret Stashes':            { iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-gold.png',   iconSize: [25,41], iconAnchor: [12,41] },
     'Bunker Layouts':    { iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png', iconSize: [25,41], iconAnchor: [12,41] }
@@ -109,11 +115,11 @@ const SURFACE_IMAGE_URL =
   /* -------- Markers (SURFACE) -------- */
   const markersSurface = [
     /*Bunkers Spoilers*/
-    { name:'Bunker 16', x:572, y:503, category:'Spoilers', desc:'No Key Needed.' },
-    { name:'Bunker 15', x:558, y:552, category:'Spoilers', desc:'Keycard Needed.' },
-    { name:'Bunker 19', x:588, y:573, category:'Spoilers', desc:'Keycard Needed.' },
-    { name:'Bunker 24', x:838, y:506, category:'Spoilers', desc:'No Key Needed.' },
-    { name:'Bunker 11', x:857, y:542, category:'Spoilers', desc:'Keycard Needed.' },
+    { name:'Bunker 16', x:572, y:503, category:'Bunkers', desc:'No Key Needed.' },
+    { name:'Bunker 15', x:558, y:552, category:'Bunkers', desc:'Keycard Needed.' },
+    { name:'Bunker 19', x:588, y:573, category:'Bunkers', desc:'Keycard Needed.' },
+    { name:'Bunker 24', x:838, y:506, category:'Bunkers', desc:'No Key Needed.' },
+    { name:'Bunker 11', x:857, y:542, category:'Bunkers', desc:'Keycard Needed.' },
     { name:'Missle Silo', x:663, y:476, category:'Spoilers', desc:'No Key Needed.' },
     { name:'Missle Silo', x:813, y:452, category:'Spoilers', desc:'No Key Needed.' },
     { name:'Missle Silo', x:789, y:689, category:'Spoilers', desc:'No Key Needed.' },
@@ -228,6 +234,13 @@ const SURFACE_IMAGE_URL =
     { name:'Bunker 11 Layout', x:586, y:542, category:'Bunker Layouts', desc:'Requires keycard.',}
   ];
 
+
+    /* -------- Markers (Quests) -------- */
+  const markersQuests = [
+    { name:'Bunker 16 Layout', x:572, y:503, category:'Bunker Layouts', desc:'No Key Needed.',},
+    { name:'Bunker 11 Layout', x:586, y:542, category:'Bunker Layouts', desc:'Requires keycard.',}
+  ];
+
   /* ==================== END CONFIG ==================== */
 
   /* Map setup with clamped bounds/zoom */
@@ -247,6 +260,7 @@ const SURFACE_IMAGE_URL =
 
   const overlaySurface     = L.imageOverlay(SURFACE_IMAGE_URL, bounds);
   const overlayUnderground = L.imageOverlay(UNDERGROUND_IMAGE_URL, bounds);
+  const overlayQuests = L.imageOverlay(UNDERGROUND_IMAGE_URL, bounds);
   overlaySurface.addTo(map);
 
   /* Keep users on the image; no panning outside */
@@ -406,6 +420,7 @@ const SURFACE_IMAGE_URL =
   </script>
 </body>
 </html>
+
 
 
 

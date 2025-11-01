@@ -361,24 +361,37 @@ const SURFACE_IMAGE_URL =
     buildLegend([...categoriesPresent]);
   }
 
-  function setMode(mode) {
-    if (mode === currentMode) return;
-    currentMode = mode;
+ function setMode(mode) {
+  if (mode === currentMode) return;
+  currentMode = mode;
 
-    if (mode === 'surface') {
-      map.removeLayer(overlayUnderground);
-      overlaySurface.addTo(map);
-      renderMarkers(markersSurface);
-    } else {
-      map.removeLayer(overlaySurface);
-      overlayUnderground.addTo(map);
-      renderMarkers(markersUnderground);
-    }
+  // remove all overlays first
+  map.removeLayer(overlaySurface);
+  map.removeLayer(overlayUnderground);
+  map.removeLayer(overlayQuests);
 
-    map.setMaxBounds(bounds);
-    const z = Math.max(map.getZoom(), minZoomToShowAll);
-    map.setView(startLatLng, z);
+  // add the chosen overlay + markers
+  if (mode === 'surface') {
+    overlaySurface.addTo(map);
+    renderMarkers(markersSurface);
+  } else if (mode === 'underground') {
+    overlayUnderground.addTo(map);
+    renderMarkers(markersUnderground);
+  } else if (mode === 'quests') {
+    overlayQuests.addTo(map);
+    renderMarkers(markersQuests);
   }
+
+  // keep bounds/zoom behavior consistent
+  map.setMaxBounds(bounds);
+  const z = Math.max(map.getZoom(), minZoomToShowAll);
+  const startLatLng = map.unproject([START.x, START.y], 0);
+  map.setView(startLatLng, z);
+
+  // refresh the mode radios’ checked state (in case changed programmatically)
+  const r = filterPanel.querySelector(`input[name="mapMode"][value="${mode}"]`);
+  if (r) r.checked = true;
+}
 
   /* Initial render */
   renderMarkers(markersSurface);
@@ -420,6 +433,7 @@ const SURFACE_IMAGE_URL =
   </script>
 </body>
 </html>
+
 
 
 
